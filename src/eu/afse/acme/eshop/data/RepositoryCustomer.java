@@ -23,6 +23,8 @@ public class RepositoryCustomer {
     private double cashTypeTotal;
     private double wireTypeTotal;
     private double creditTypeTotal;
+    private int totNumber;
+    private double totCost;
 
     public RepositoryCustomer() {
         this.customerOrder = new HashMap<>();
@@ -30,6 +32,22 @@ public class RepositoryCustomer {
 
     public Map<String, Statistics> getCustomerOrder() {
         return customerOrder;
+    }
+
+    public int getTotNumber() {
+        return totNumber;
+    }
+
+    public void setTotNumber(int totNumber) {
+        this.totNumber = totNumber;
+    }
+
+    public double getTotCost() {
+        return totCost;
+    }
+
+    public void setTotCost(double totCost) {
+        this.totCost = totCost;
     }
 
     public void setCustomerOrder(Map<String, Statistics> customerOrder) {
@@ -66,16 +84,21 @@ public class RepositoryCustomer {
         if (order.getPaymentType().equals(PaymentType.CASH)) {
             cashTypeTotal += order.totalOrderCost();
             cashCounter ++ ;
+            totNumber ++;
+            totCost=+ order.totalOrderCost();
         }
         else if (order.getPaymentType().equals(PaymentType.WIRE_TRANSFER)) {
             wireTypeTotal += order.totalOrderCost();
             wireCounter ++ ;
+            totNumber++;
+            totCost=+ order.totalOrderCost();
         } else if (order.getPaymentType().equals(PaymentType.CREDIT_CARD)){
             creditTypeTotal += order.totalOrderCost();
             creditCounter ++ ;
+            totNumber++;
+            totCost=+ order.totalOrderCost();
         }
     }
-
 
     @Override
     public String toString() {

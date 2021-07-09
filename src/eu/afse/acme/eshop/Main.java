@@ -43,14 +43,19 @@ public class Main {
         repositoryCustomer.addNewOrderStatistics(order4);
         repositoryCustomer.addNewOrderStatistics(order1);
         repositoryCustomer.addNewOrderStatistics(order3);
+
         repositoryCustomer.addTypeOrderStatistics(order2);
         repositoryCustomer.addTypeOrderStatistics(order2);
         repositoryCustomer.addTypeOrderStatistics(order3);
         repositoryCustomer.addTypeOrderStatistics(order1);
+
         repositoryCustomer.addPaymentMethodStatistics(order2);
         repositoryCustomer.addPaymentMethodStatistics(order2);
         repositoryCustomer.addPaymentMethodStatistics(order1);
+
         System.out.println(repositoryCustomer);
+
+        repositoryOrder.averageOrderCost(repositoryCustomer.getTotNumber(),repositoryCustomer.getTotCost());
 
     }
 

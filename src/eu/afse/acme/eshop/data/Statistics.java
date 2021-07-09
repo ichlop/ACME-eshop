@@ -34,6 +34,8 @@ public class Statistics {
         this.totalCost += cost;
     }
 
+
+
     @Override
     public String toString() {
         return "Statistics{" +
