@@ -1,6 +1,5 @@
 package eu.afse.acme.eshop.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,8 +7,35 @@ public class Order {
     private Date orderDate;
     private String id;
     private String shipment;
-    private final List<Product> products = new ArrayList<>();
+    private List<Product> products;
     private Customer customer;
+    private PaymentType paymentType;
+
+    private final double busDiscount = 0.2;
+    private final double govDiscount = 0.5;
+    private final double wirePayDiscount = 0.1;
+    private final double creditPayDiscount = 0.15;
+
+    public Order(Date orderDate, String id, String shipment, List<Product> products, Customer customer, PaymentType paymentType) {
+        this.orderDate = orderDate;
+        this.id = id;
+        this.shipment = shipment;
+        this.products = products;
+        this.customer = customer;
+        this.paymentType = paymentType;
+    }
+
+    public Order(List<Product> products) {
+        this.products = products;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
 
     public Date getOrderDate() {
         return orderDate;
@@ -33,6 +59,10 @@ public class Order {
 
     public void setShipment(String shipment) {
         this.shipment = shipment;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public List<Product> getProducts() {
@@ -61,19 +91,47 @@ public class Order {
         products.add(product);
     }
 
-    public double calculateTotal() {
-        double calculation = 0;
-//        for (int index = 0 ; index < products.size(); index ++){
-//            calculation += products.get(index).getPrice();
-//        }
+    public double totalOrderCost () {
+        double totalCost = 0;
+            for (Product product : products) {
+                totalCost += product.getPrice();
+            }
+        return totalCost;
 
-        for (Product product : products) {
-            calculation += product.getPrice();
+    }
+
+    public double totalCostWithDiscount() {
+
+        //private const
+        double totalOrderCost= totalOrderCost();
+
+        switch (getCustomer().getCustomerType()) {
+            case INDIVIDUAL:
+                if (PaymentType.CREDIT_CARD.equals(paymentType)) {
+                    totalOrderCost -= creditPayDiscount*totalOrderCost;
+                } else if (paymentType.WIRE_TRANSFER.equals(paymentType)) {
+                    totalOrderCost -= wirePayDiscount*totalOrderCost;
+                }
+                break;
+            case BUSINESS:
+                totalOrderCost -= totalOrderCost*busDiscount;
+                if (PaymentType.CREDIT_CARD.equals(paymentType)) {
+                    totalOrderCost -= creditPayDiscount*totalOrderCost;
+                } else if (paymentType.WIRE_TRANSFER.equals(paymentType)) {
+                    totalOrderCost -= wirePayDiscount*totalOrderCost;
+                }
+                break;
+            case GOVERMENT:
+                totalOrderCost -= totalOrderCost*govDiscount;
+                if (PaymentType.CREDIT_CARD.equals(paymentType)) {
+                    totalOrderCost -= creditPayDiscount*totalOrderCost;
+                } else if (paymentType.WIRE_TRANSFER.equals(paymentType)) {
+                    totalOrderCost -= wirePayDiscount*totalOrderCost;
+                }
+                break;
+            default:
+                System.out.println("There is nothing to compute");
         }
-
-//      calculation = products.stream().map(product ->product.getPrice())
-//              .reduce( (value1, value2) -> value1+value2).get();
-
-        return calculation;
+        return totalOrderCost;
     }
 }

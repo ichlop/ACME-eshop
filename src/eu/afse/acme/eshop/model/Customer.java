@@ -2,15 +2,17 @@ package eu.afse.acme.eshop.model;
 
 public class Customer {
 
-    private int id;
+    private String id;
     private String name;
     private String surname;
     private String address;
     private String tel;
     private String email;
+    private CustomerType customerType;
 
-    public Customer(int id, String name, String surname, String address, String tel, String email) {
+    public Customer(String id, String name, String surname, String address,CustomerType customerType, String tel, String email) {
         this.id = id;
+        this.customerType = customerType;
         this.name = name;
         this.surname = surname;
         this.address = address;
@@ -18,11 +20,11 @@ public class Customer {
         this.email = email;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,6 +60,14 @@ public class Customer {
         this.tel = tel;
     }
 
+    public CustomerType getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -76,4 +86,5 @@ public class Customer {
                 ", tel='" + tel + '\'' +
                 ", email='" + email + '\'';
     }
+
 }

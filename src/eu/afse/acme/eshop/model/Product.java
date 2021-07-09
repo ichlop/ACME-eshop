@@ -9,6 +9,7 @@ public class Product {
     private int size;
     private String material;
 
+
     public Product(String name, double price, String description, int size, String material) {
         this.name = name;
         this.price = price;
