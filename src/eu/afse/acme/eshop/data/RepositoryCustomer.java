@@ -3,6 +3,7 @@ package eu.afse.acme.eshop.data;
 import eu.afse.acme.eshop.model.Customer;
 import eu.afse.acme.eshop.model.CustomerType;
 import eu.afse.acme.eshop.model.Order;
+import eu.afse.acme.eshop.model.PaymentType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,13 +11,18 @@ import java.util.Map;
 public class RepositoryCustomer {
 
     private Map<String, Statistics> customerOrder;
-    private Map<CustomerType, Statistics> customerTypeOrder;
     private int indCounter;
     private int busCounter;
     private int govCounter;
     private double valueInd;
     private double valueBus;
     private double valueGov;
+    private int cashCounter;
+    private int creditCounter;
+    private int wireCounter;
+    private double cashTypeTotal;
+    private double wireTypeTotal;
+    private double creditTypeTotal;
 
     public RepositoryCustomer() {
         this.customerOrder = new HashMap<>();
@@ -47,25 +53,49 @@ public class RepositoryCustomer {
         if (order.getCustomer().getCustomerType().equals(CustomerType.INDIVIDUAL)) {
             valueInd += order.totalOrderCost();
             indCounter ++ ;
-            }
-        else if (order.getCustomer().getCustomerType().equals(CustomerType.BUSINESS)) {
+        } else if (order.getCustomer().getCustomerType().equals(CustomerType.BUSINESS)) {
             valueBus += order.totalOrderCost();
             busCounter++;
-        } else {
+        } else if (order.getCustomer().getCustomerType().equals(CustomerType.GOVERMENT)){
             valueGov += order.totalOrderCost();
             govCounter ++;
+        }
+    }
+
+    public void addPaymentMethodStatistics(Order order) {
+        if (order.getPaymentType().equals(PaymentType.CASH)) {
+            cashTypeTotal += order.totalOrderCost();
+            cashCounter ++ ;
+        }
+        else if (order.getPaymentType().equals(PaymentType.WIRE_TRANSFER)) {
+            wireTypeTotal += order.totalOrderCost();
+            wireCounter ++ ;
+        } else if (order.getPaymentType().equals(PaymentType.CREDIT_CARD)){
+            creditTypeTotal += order.totalOrderCost();
+            creditCounter ++ ;
         }
     }
 
 
     @Override
     public String toString() {
-        return "RepositoryCustomer{" +
-                "customerOrder=" + customerOrder +
-                ", indCounter=" + indCounter +
-                ", busCounter=" + busCounter +
-                ", govCounter=" + govCounter +
-                '}';
+        return "RepositoryCustomer" +"\n"+
+                " Number and cost for a particular customer: " +
+                "Orders per customerId=" + customerOrder + "\n"+
+                " Number and cost per customer category: " +
+                " INDIVIDUAL Type orders=" + indCounter +
+                ", BUSINESS  Type orders=" + busCounter +
+                ", GOVERNMENT  Type orders=" + govCounter +
+                "[ TotalCost for Individuals=" + valueInd +
+                ", TotalCost for Business=" + valueBus +
+                ", TotalCost for Governments=" + valueGov +"] \n"+
+                " Number and cost per payment method: " +
+                " Cash orders=" + cashCounter +
+                ", Credit orders=" + creditCounter +
+                ", Wire orders=" + wireCounter +
+                "[ Total cost for Cash payments=" + cashTypeTotal +
+                ", Total cost for Wire payments=" + wireTypeTotal +
+                ", Total cost for Credit payments=" + creditTypeTotal +"]";
     }
 }
 

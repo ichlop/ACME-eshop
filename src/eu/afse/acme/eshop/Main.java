@@ -2,7 +2,6 @@ package eu.afse.acme.eshop;
 
 import eu.afse.acme.eshop.data.RepositoryCustomer;
 import eu.afse.acme.eshop.data.RepositoryOrder;
-import eu.afse.acme.eshop.data.Statistics;
 import eu.afse.acme.eshop.model.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,12 +41,16 @@ public class Main {
         repositoryCustomer.addNewOrderStatistics(order1);
         repositoryCustomer.addNewOrderStatistics(order2);
         repositoryCustomer.addNewOrderStatistics(order4);
+        repositoryCustomer.addNewOrderStatistics(order1);
+        repositoryCustomer.addNewOrderStatistics(order3);
         repositoryCustomer.addTypeOrderStatistics(order2);
+        repositoryCustomer.addTypeOrderStatistics(order2);
+        repositoryCustomer.addTypeOrderStatistics(order3);
+        repositoryCustomer.addTypeOrderStatistics(order1);
+        repositoryCustomer.addPaymentMethodStatistics(order2);
+        repositoryCustomer.addPaymentMethodStatistics(order2);
+        repositoryCustomer.addPaymentMethodStatistics(order1);
         System.out.println(repositoryCustomer);
-
-        //System.out.println("The total cost of your order is: " + order1.totalOrderCost());
-        //System.out.println("With discount; " + order1.totalCostWithDiscount());
-
 
     }
 
